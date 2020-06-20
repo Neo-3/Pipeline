@@ -1,0 +1,3 @@
+[submodule "image-crawler"]
+	path = image-crawler
+	url = https://github.com/Neoenergia-3/image-crawler.git
