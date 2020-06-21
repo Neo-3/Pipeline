@@ -5,3 +5,6 @@
 [submodule "image_clustering"]
 	path = image_clustering
 	url = https://github.com/Neoenergia-3/image_clustering.git
+[submodule "feature_extractor"]
+	path = feature_extractor
+	url = https://github.com/Neoenergia-3/feature_extractor.git
