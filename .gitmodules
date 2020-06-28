@@ -8,3 +8,6 @@
 [submodule "feature_extractor"]
 	path = feature_extractor
 	url = https://github.com/Neoenergia-3/feature_extractor.git
+[submodule "image_data_set"]
+	path = image_data_set
+	url = git@github.com:Neoenergia-3/image_data_set.git
