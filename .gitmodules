@@ -1,7 +1,9 @@
 [submodule "image_crawler"]
 	path = image_crawler
 	url = https://github.com/Neoenergia-3/image_crawler.git
-	
+[submodule "image_data_augmentation"]
+	path = image_data_augmentation
+	url = https://github.com/Neoenergia-3/image_data_augmentation.git	
 [submodule "image_clustering"]
 	path = image_clustering
 	url = https://github.com/Neoenergia-3/image_clustering.git
