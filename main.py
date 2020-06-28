@@ -11,6 +11,7 @@ from image_crawler import download
 from feature_extractor import extract_image
 from image_clustering import create_cluster
 from image_data_augmentation import augment_data
+from image_data_set import (get_best_features, generate_csv)
 import os
 import shutil
 import glob
@@ -22,12 +23,18 @@ import math
 SEARCHING_PARAMS = ["analog electric meter", "analog electricity meter", "electricity meter", "electric meter",
                     "energy meter", "medidor de energia", "medidor de energia analogico", "medidor de energia eletrica"]
 
+AUGMENTED_PATH_TEST_1 = 'augmented/test/1'
+AUGMENTED_PATH_TRAIN_1 = 'augmented/train/1'
+AUGMENTED_PATH_TEST_0 = 'augmented/test/0'
+AUGMENTED_PATH_TRAIN_0 = 'augmented/train/0'
+
 
 def exec_full_pipeline():
     print("exec full pipeline")
     exec_image_crawling()
     exec_image_clustering()
     exec_image_data_augmentation()
+    exec_image_data_set()
 
 
 def exec_image_crawling():
@@ -68,14 +75,15 @@ def _safe_create_dir(dir_name):
 
 
 def exec_image_data_augmentation():
+    print("Start image data augmentation")
     IMAGE_BASE_GROWTH_RATIO = 5
     train_test_ratio = 0.7
     bad_img_dir = './selected/0'
     good_img_dir = './selected/1'
-    _safe_create_dir('augmented/test/1')
-    _safe_create_dir('augmented/train/1')
-    _safe_create_dir('augmented/test/0')
-    _safe_create_dir('augmented/train/0')
+    _safe_create_dir(AUGMENTED_PATH_TEST_1)
+    _safe_create_dir(AUGMENTED_PATH_TRAIN_1)
+    _safe_create_dir(AUGMENTED_PATH_TEST_0)
+    _safe_create_dir(AUGMENTED_PATH_TRAIN_0)
 
     bad_files = glob.glob(os.path.join(bad_img_dir, '*.jpg'))
     good_files = glob.glob(os.path.join(good_img_dir, '*.jpg'))
@@ -107,6 +115,32 @@ def exec_image_data_augmentation():
                  IMAGE_BASE_GROWTH_RATIO, '1')
 
 
+def extract_best_from_path(path, model):
+    files = glob.glob(os.path.join(path, '*.jpg'))
+    files.sort()
+    image.LOAD_TRUNCATED_IMAGES = True
+    features = []
+    for i, imagepath in enumerate(files):
+        print("Extracting features: ", i+1, "/", len(files), end="\r")
+        img = image.load_img(imagepath, target_size=(256, 256))
+        extracted_features = extract_image(img, model)
+        best_features = get_best_features(extracted_features)
+        features.append(best_features)
+    return features
+
+
+def exec_image_data_set():
+    print("Start image data set")
+    model = VGG16(weights='imagenet', include_top=False)
+    good_test_features = extract_best_from_path(AUGMENTED_PATH_TEST_1, model)
+    bad_test_features = extract_best_from_path(AUGMENTED_PATH_TEST_0, model)
+    generate_csv(good_test_features, bad_test_features, "test.csv")
+
+    good_train_features = extract_best_from_path(AUGMENTED_PATH_TRAIN_1, model)
+    bad_train_features = extract_best_from_path(AUGMENTED_PATH_TRAIN_0, model)
+    generate_csv(good_train_features, bad_train_features, "train.csv")
+
+
 if __name__ == "__main__":
     print(sys.argv)
     if(len(sys.argv) > 1):
@@ -119,6 +153,8 @@ if __name__ == "__main__":
             exec_image_clustering()
         elif run_type == "--image-data-augmentation":
             exec_image_data_augmentation()
+        elif run_type == "--image-data-set":
+            exec_image_data_set()
     else:
         print("Warning you should define the run type")
         print("Calling full pipeline by default")
