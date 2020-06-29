@@ -104,4 +104,4 @@ Este passo executa os modelos de machine learning selecionados pela equipe, afim
 
 Atualmente foram testados 4 classificadores, o KNN, a Regressão Logística, o Random Forest e o CatBoost.
 
-O classificador com melhor desempenho foi o CatBoost com 93.45985401459855% de acurácia.
+O classificador com melhor desempenho foi o CatBoost com 93.46% de acurácia.
