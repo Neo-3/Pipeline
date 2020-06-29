@@ -12,6 +12,8 @@ from feature_extractor import extract_image
 from image_clustering import create_cluster
 from image_data_augmentation import augment_data
 from image_data_set import (get_best_features, generate_csv)
+from image_classifier import (
+    knn_classifier, logistic_regression_classifier, random_forest_classifier, Catboost_classifier)
 import os
 import shutil
 import glob
@@ -141,6 +143,26 @@ def exec_image_data_set():
     generate_csv(good_train_features, bad_train_features, "train.csv")
 
 
+def exec_image_classifier():
+    print("Start image classifier")
+    results = []
+    results.append(knn_classifier())
+    results.append(logistic_regression_classifier())
+    results.append(random_forest_classifier())
+    results.append(Catboost_classifier())
+    print("the final score result was:")
+    best_score = results[0][0]
+    best_classifier = results[0][1]
+    for result in results:
+        if(result[0] > best_score):
+            best_score = result[0]
+            best_classifier = result[1]
+        print(result)
+
+    print("The best classifier is", best_classifier,
+          "with", str(best_score*100) + "% of accuracy")
+
+
 if __name__ == "__main__":
     print(sys.argv)
     if(len(sys.argv) > 1):
@@ -155,6 +177,8 @@ if __name__ == "__main__":
             exec_image_data_augmentation()
         elif run_type == "--image-data-set":
             exec_image_data_set()
+        elif run_type == "--image-classifier":
+            exec_image_classifier()
     else:
         print("Warning you should define the run type")
         print("Calling full pipeline by default")

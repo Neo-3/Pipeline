@@ -13,3 +13,6 @@
 [submodule "image_data_set"]
 	path = image_data_set
 	url = git@github.com:Neoenergia-3/image_data_set.git
+[submodule "image_classifier"]
+	path = image_classifier
+	url = git@github.com:Neoenergia-3/image_classifier.git
