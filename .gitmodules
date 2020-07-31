@@ -1,18 +1,18 @@
 [submodule "image_crawler"]
 	path = image_crawler
-	url = https://github.com/Neoenergia-3/image_crawler.git
+	url = https://github.com/Neo-3/image_crawler.git
 [submodule "image_data_augmentation"]
 	path = image_data_augmentation
-	url = https://github.com/Neoenergia-3/image_data_augmentation.git	
+	url = https://github.com/Neo-3/image_data_augmentation.git	
 [submodule "image_clustering"]
 	path = image_clustering
-	url = https://github.com/Neoenergia-3/image_clustering.git
+	url = https://github.com/Neo-3/image_clustering.git
 [submodule "feature_extractor"]
 	path = feature_extractor
-	url = https://github.com/Neoenergia-3/feature_extractor.git
+	url = https://github.com/Neo-3/feature_extractor.git
 [submodule "image_data_set"]
 	path = image_data_set
-	url = git@github.com:Neoenergia-3/image_data_set.git
+	url = git@github.com:Neo-3/image_data_set.git
 [submodule "image_classifier"]
 	path = image_classifier
-	url = git@github.com:Neoenergia-3/image_classifier.git
+	url = git@github.com:Neo-3/image_classifier.git
